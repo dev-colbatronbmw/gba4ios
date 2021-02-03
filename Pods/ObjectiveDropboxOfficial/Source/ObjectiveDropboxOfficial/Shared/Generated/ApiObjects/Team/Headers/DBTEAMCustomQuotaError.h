@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// The `CustomQuotaError` union.
 ///
-/// Error returned by setting member custom quota.
+/// Error returned when getting member custom quota.
 ///
 /// This class implements the `DBSerializable` protocol (serialize and
 /// deserialize instance methods), which is required for all Obj-C SDK API route
@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, DBTEAMCustomQuotaErrorTag) {
 /// @return A json-compatible dictionary representation of the
 /// `DBTEAMCustomQuotaError` API object.
 ///
-+ (nullable NSDictionary *)serialize:(DBTEAMCustomQuotaError *)instance;
++ (nullable NSDictionary<NSString *, id> *)serialize:(DBTEAMCustomQuotaError *)instance;
 
 ///
 /// Deserializes `DBTEAMCustomQuotaError` instances.
@@ -112,7 +112,7 @@ typedef NS_ENUM(NSInteger, DBTEAMCustomQuotaErrorTag) {
 ///
 /// @return An instantiation of the `DBTEAMCustomQuotaError` object.
 ///
-+ (DBTEAMCustomQuotaError *)deserialize:(NSDictionary *)dict;
++ (DBTEAMCustomQuotaError *)deserialize:(NSDictionary<NSString *, id> *)dict;
 
 @end
 

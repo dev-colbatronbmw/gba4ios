@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E8319B94C47A277813B18A2560C7E5AD"
-               BuildableName = "libObjectiveDropboxOfficial.a"
+               BuildableName = "ObjectiveDropboxOfficial.framework"
                BlueprintName = "ObjectiveDropboxOfficial"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

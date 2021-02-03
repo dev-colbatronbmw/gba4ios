@@ -28,9 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Instance fields
 
-/// List of custom properties to add to file.
-@property (nonatomic, readonly, nullable) NSArray<DBFILEPROPERTIESPropertyGroup *> *propertyGroups;
-
 #pragma mark - Constructors
 
 ///
@@ -50,6 +47,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// this tells the clients that this modification shouldn't result in a user
 /// notification.
 /// @param propertyGroups List of custom properties to add to file.
+/// @param strictConflict Be more strict about how each WriteMode detects
+/// conflict. For example, always return a conflict error when mode = `update`
+/// in `DBFILESWriteMode` and the given "rev" doesn't match the existing file's
+/// "rev", even if the existing file has been deleted.
 ///
 /// @return An initialized instance.
 ///
@@ -58,7 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
                   autorename:(nullable NSNumber *)autorename
               clientModified:(nullable NSDate *)clientModified
                         mute:(nullable NSNumber *)mute
-              propertyGroups:(nullable NSArray<DBFILEPROPERTIESPropertyGroup *> *)propertyGroups;
+              propertyGroups:(nullable NSArray<DBFILEPROPERTIESPropertyGroup *> *)propertyGroups
+              strictConflict:(nullable NSNumber *)strictConflict;
 
 ///
 /// Convenience constructor (exposes only non-nullable instance variables with
@@ -88,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @return A json-compatible dictionary representation of the
 /// `DBFILESCommitInfoWithProperties` API object.
 ///
-+ (nullable NSDictionary *)serialize:(DBFILESCommitInfoWithProperties *)instance;
++ (nullable NSDictionary<NSString *, id> *)serialize:(DBFILESCommitInfoWithProperties *)instance;
 
 ///
 /// Deserializes `DBFILESCommitInfoWithProperties` instances.
@@ -98,7 +100,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @return An instantiation of the `DBFILESCommitInfoWithProperties` object.
 ///
-+ (DBFILESCommitInfoWithProperties *)deserialize:(NSDictionary *)dict;
++ (DBFILESCommitInfoWithProperties *)deserialize:(NSDictionary<NSString *, id> *)dict;
 
 @end
 

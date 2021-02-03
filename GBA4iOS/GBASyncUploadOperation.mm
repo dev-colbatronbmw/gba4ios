@@ -39,7 +39,7 @@
     if (metadata == nil)
     {
         NSDictionary *dropboxFiles = [[GBASyncManager sharedManager] dropboxFiles];
-        metadata = dropboxFiles[self.dropboxPath];
+        metadata = dropboxFiles[self.dropboxPath.lowercaseString];
     }
     
     DBFILESFileMetadata *fileMetadata = (DBFILESFileMetadata *)metadata;
@@ -71,7 +71,18 @@
         {
             writeMode = [[DBFILESWriteMode alloc] initWithAdd];
         }
-        [[self.restClient.filesRoutes uploadUrl:self.dropboxPath mode:writeMode autorename:[NSNumber numberWithBool:NO] clientModified:nil mute:[NSNumber numberWithBool:YES] inputUrl:localPath] setResponseBlock:^(DBFILESFileMetadata * _Nullable result, DBFILESUploadError * _Nullable routeError, DBRequestError * _Nullable networkError) {
+        [[self.restClient.filesRoutes
+          alphaUploadUrl:self.dropboxPath
+          mode:writeMode
+          autorename:[NSNumber numberWithBool:NO]
+          clientModified:nil
+          mute:[NSNumber numberWithBool:YES]
+          propertyGroups:nil
+          strictConflict:nil
+          inputUrl:localPath]
+         setResponseBlock:^(DBFILESFileMetadata * _Nullable result,
+                            DBFILESUploadErrorWithProperties * _Nullable routeError,
+                            DBRequestError * _Nullable networkError) {
             DLog(@"routeError: %@, networkError: %@", routeError, networkError);
             if (networkError)
             {

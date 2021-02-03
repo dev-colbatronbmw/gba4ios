@@ -29,10 +29,27 @@ NS_ASSUME_NONNULL_BEGIN
 /// A list (possibly empty) of matches for the query.
 @property (nonatomic, readonly) NSArray<DBFILEPROPERTIESPropertiesSearchMatch *> *matches;
 
+/// Pass the cursor into `propertiesSearchContinue` to continue to receive
+/// search results. Cursor will be null when there are no more results.
+@property (nonatomic, readonly, copy, nullable) NSString *cursor;
+
 #pragma mark - Constructors
 
 ///
 /// Full constructor for the struct (exposes all instance variables).
+///
+/// @param matches A list (possibly empty) of matches for the query.
+/// @param cursor Pass the cursor into `propertiesSearchContinue` to continue to
+/// receive search results. Cursor will be null when there are no more results.
+///
+/// @return An initialized instance.
+///
+- (instancetype)initWithMatches:(NSArray<DBFILEPROPERTIESPropertiesSearchMatch *> *)matches
+                         cursor:(nullable NSString *)cursor;
+
+///
+/// Convenience constructor (exposes only non-nullable instance variables with
+/// no default value).
 ///
 /// @param matches A list (possibly empty) of matches for the query.
 ///
@@ -60,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @return A json-compatible dictionary representation of the
 /// `DBFILEPROPERTIESPropertiesSearchResult` API object.
 ///
-+ (nullable NSDictionary *)serialize:(DBFILEPROPERTIESPropertiesSearchResult *)instance;
++ (nullable NSDictionary<NSString *, id> *)serialize:(DBFILEPROPERTIESPropertiesSearchResult *)instance;
 
 ///
 /// Deserializes `DBFILEPROPERTIESPropertiesSearchResult` instances.
@@ -71,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @return An instantiation of the `DBFILEPROPERTIESPropertiesSearchResult`
 /// object.
 ///
-+ (DBFILEPROPERTIESPropertiesSearchResult *)deserialize:(NSDictionary *)dict;
++ (DBFILEPROPERTIESPropertiesSearchResult *)deserialize:(NSDictionary<NSString *, id> *)dict;
 
 @end
 

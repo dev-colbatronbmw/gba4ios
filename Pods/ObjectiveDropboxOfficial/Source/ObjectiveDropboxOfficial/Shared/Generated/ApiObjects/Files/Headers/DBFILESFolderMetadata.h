@@ -39,7 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, nullable) DBFILESFolderSharingInfo *sharingInfo;
 
 /// Additional information if the file has custom properties with the property
-/// template specified.
+/// template specified. Note that only properties associated with user-owned
+/// templates, not team-owned templates, can be attached to folders.
 @property (nonatomic, readonly, nullable) NSArray<DBFILEPROPERTIESPropertyGroup *> *propertyGroups;
 
 #pragma mark - Constructors
@@ -66,7 +67,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param sharingInfo Set if the folder is contained in a shared folder or is a
 /// shared folder mount point.
 /// @param propertyGroups Additional information if the file has custom
-/// properties with the property template specified.
+/// properties with the property template specified. Note that only properties
+/// associated with user-owned templates, not team-owned templates, can be
+/// attached to folders.
 ///
 /// @return An initialized instance.
 ///
@@ -108,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @return A json-compatible dictionary representation of the
 /// `DBFILESFolderMetadata` API object.
 ///
-+ (nullable NSDictionary *)serialize:(DBFILESFolderMetadata *)instance;
++ (nullable NSDictionary<NSString *, id> *)serialize:(DBFILESFolderMetadata *)instance;
 
 ///
 /// Deserializes `DBFILESFolderMetadata` instances.
@@ -118,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// @return An instantiation of the `DBFILESFolderMetadata` object.
 ///
-+ (DBFILESFolderMetadata *)deserialize:(NSDictionary *)dict;
++ (DBFILESFolderMetadata *)deserialize:(NSDictionary<NSString *, id> *)dict;
 
 @end
 

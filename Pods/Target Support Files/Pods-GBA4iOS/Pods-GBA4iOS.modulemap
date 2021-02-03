@@ -1,0 +1,6 @@
+framework module Pods_GBA4iOS {
+  umbrella header "Pods-GBA4iOS-umbrella.h"
+
+  export *
+  module * { export * }
+}

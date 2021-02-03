@@ -1,0 +1,6 @@
+framework module PSPDFTextView {
+  umbrella header "PSPDFTextView-umbrella.h"
+
+  export *
+  module * { export * }
+}

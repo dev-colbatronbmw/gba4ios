@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "694D74196578EDC597B8A5875BA7A3C8"
-               BuildableName = "libRSTWebViewController.a"
+               BuildableName = "RSTWebViewController.framework"
                BlueprintName = "RSTWebViewController"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>

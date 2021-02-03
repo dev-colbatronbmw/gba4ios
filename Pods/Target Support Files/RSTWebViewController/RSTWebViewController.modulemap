@@ -1,0 +1,6 @@
+framework module RSTWebViewController {
+  umbrella header "RSTWebViewController-umbrella.h"
+
+  export *
+  module * { export * }
+}

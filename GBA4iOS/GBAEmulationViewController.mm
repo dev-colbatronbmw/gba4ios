@@ -47,6 +47,7 @@ static GBAEmulationViewController *_emulationViewController;
     NSInteger _hideIntroAnimationFrameCount;
 }
 
+@property (strong, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet GBAEmulatorScreen *emulatorScreen;
 @property (strong, nonatomic) IBOutlet GBAControllerView *controllerView;
 @property (strong, nonatomic) GBAExternalController *externalController;
@@ -1151,7 +1152,10 @@ static GBAEmulationViewController *_emulationViewController;
     
     // Below code used in didRotateFromInterfaceOrientation as well, except without the selectionHandler
     
-    CGRect rect = [self.controllerView.controllerSkin frameForMapping:GBAControllerSkinMappingMenu orientation:self.controllerView.orientation controllerDisplaySize:self.view.window.bounds.size useExtendedEdges:NO];
+    CGRect rect = [self.controllerView.controllerSkin frameForMapping:GBAControllerSkinMappingMenu
+                                                          orientation:self.controllerView.orientation
+                                                controllerDisplaySize:self.view.window.bounds.size
+                                                     useExtendedEdges:NO];
     
     CGRect convertedRect = [self.view convertRect:rect fromView:self.controllerView];
     
@@ -1192,20 +1196,24 @@ static GBAEmulationViewController *_emulationViewController;
     }
     
     self.sustainButtonBlurredContentsImageView = ({
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds))];
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0,
+                                                                               CGRectGetWidth(self.containerView.bounds),
+                                                                               CGRectGetHeight(self.containerView.bounds))];
         imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         imageView.alpha = 0.0;
         
         UIImage *image = [self blurredViewImageForInterfaceOrientation:self.interfaceOrientation drawController:NO];
         imageView.image = image;
         
-        [self.view insertSubview:imageView belowSubview:self.controllerView];
+        [self.containerView insertSubview:imageView belowSubview:self.controllerView];
         
         imageView;
     });
     
     BOOL screenRectEmpty = NO;
-    CGRect screenRect = [self.controllerView.controllerSkin frameForMapping:GBAControllerSkinMappingScreen orientation:self.controllerView.orientation controllerDisplaySize:self.view.window.bounds.size];
+    CGRect screenRect = [self.controllerView.controllerSkin frameForMapping:GBAControllerSkinMappingScreen
+                                                                orientation:self.controllerView.orientation
+                                                      controllerDisplaySize:self.view.window.bounds.size];
     
     if (CGRectIsEmpty(screenRect))
     {
@@ -1972,7 +1980,10 @@ static GBAEmulationViewController *_emulationViewController;
     {
         // Below code used in controllerInputDidPressPauseButton as well, except with a selectionHandler
         
-        CGRect rect = [self.controllerView.controllerSkin frameForMapping:GBAControllerSkinMappingMenu orientation:self.controllerView.orientation controllerDisplaySize:self.view.window.bounds.size useExtendedEdges:NO];
+        CGRect rect = [self.controllerView.controllerSkin frameForMapping:GBAControllerSkinMappingMenu
+                                                              orientation:self.controllerView.orientation
+                                                    controllerDisplaySize:self.view.window.bounds.size
+                                                         useExtendedEdges:NO];
         
         CGRect convertedRect = [self.view convertRect:rect fromView:self.controllerView];
         
@@ -1995,18 +2006,18 @@ static GBAEmulationViewController *_emulationViewController;
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation))
     {
         [UIView animateWithDuration:0.4 animations:^{
-            if (![[self.view constraints] containsObject:self.portraitBottomLayoutConstraint])
+            if (![[self.containerView constraints] containsObject:self.portraitBottomLayoutConstraint])
             {
-                [self.view addConstraint:self.portraitBottomLayoutConstraint];
+                [self.containerView addConstraint:self.portraitBottomLayoutConstraint];
             }
         }];
     }
     else
     {
         [UIView animateWithDuration:0.4 animations:^{
-            if ([[self.view constraints] containsObject:self.portraitBottomLayoutConstraint])
+            if ([[self.containerView constraints] containsObject:self.portraitBottomLayoutConstraint])
             {
-                [self.view removeConstraint:self.portraitBottomLayoutConstraint];
+                [self.containerView removeConstraint:self.portraitBottomLayoutConstraint];
             }
         }];
     }
@@ -2128,56 +2139,56 @@ static GBAEmulationViewController *_emulationViewController;
         return;
     }
     
-    if (![self isAirplaying])
-    {
-        CGRect screenRect = [self.controllerView.controllerSkin frameForMapping:GBAControllerSkinMappingScreen orientation:self.controllerView.orientation controllerDisplaySize:self.view.bounds.size];
-        
+    if (![self isAirplaying]) {
+        CGRect screenRect = [self.controllerView.controllerSkin frameForMapping:GBAControllerSkinMappingScreen
+                                                                    orientation:self.controllerView.orientation
+                                                          controllerDisplaySize:self.containerView.bounds.size];
         // In case we're coming back from AirPlaying
-        if (![self.screenContainerView.constraints containsObject:self.screenHorizontalCenterLayoutConstraint])
-        {
+        if (![self.screenContainerView.constraints containsObject:self.screenHorizontalCenterLayoutConstraint]) {
             [self.screenContainerView addConstraint:self.screenHorizontalCenterLayoutConstraint];
         }
         
-        if (![self.screenContainerView.constraints containsObject:self.screenVerticalCenterLayoutConstraint])
-        {
+        if (![self.screenContainerView.constraints containsObject:self.screenVerticalCenterLayoutConstraint]) {
             [self.screenContainerView addConstraint:self.screenVerticalCenterLayoutConstraint];
         }
         
-        if (CGRectIsEmpty(screenRect) || self.externalController)
-        {
-            [UIView animateWithDuration:0.4 animations:^{
-                self.screenHorizontalCenterLayoutConstraint.constant = 0;
-                self.screenVerticalCenterLayoutConstraint.constant = 0;
-            }];
-            
-            [[GBAEmulatorCore sharedCore] updateEAGLViewForSize:[self screenSizeForContainerSize:self.screenContainerView.bounds.size] screen:[UIScreen mainScreen]];
-        }
-        else
-        {
-            [UIView animateWithDuration:0.4 animations:^{
-                CGPoint center = CGPointMake(CGRectGetMidX(self.screenContainerView.bounds), CGRectGetMidY(self.screenContainerView.bounds));
-                CGPoint screenRectCenter = CGPointMake(CGRectGetMinX(screenRect) + CGRectGetWidth(screenRect) / 2.0,
-                                                       CGRectGetMinY(screenRect) + CGRectGetHeight(screenRect) / 2.0);
-                
-                self.screenHorizontalCenterLayoutConstraint.constant = center.x - screenRectCenter.x;
-                self.screenVerticalCenterLayoutConstraint.constant = center.y - screenRectCenter.y;
-            }];
-            
-            self.emulatorScreen.frame = screenRect;
-            
+        self.screenVerticalCenterLayoutConstraint.constant = -screenRect.origin.y;
+        
+        if (CGRectIsEmpty(screenRect) || self.externalController) {
+            // For some fullscreen skins, `screenRect` is .zero and `self.screenContainerView.bounds.size` is also .zero
+            if (self.screenContainerView.bounds.size.height == 0) {
+                CGSize maxScreenSize = self.view.bounds.size;
+                switch (self.rom.type)
+                {
+                    case GBAROMTypeGBA:
+                    if (maxScreenSize.height / maxScreenSize.width > 160 / 240) {
+                        maxScreenSize.width = maxScreenSize.height * 240 / 160;
+                    } else {
+                        maxScreenSize.height = maxScreenSize.width * 160 / 240;
+                    }
+                    break;
+                    case GBAROMTypeGBC:
+                    if (maxScreenSize.height / maxScreenSize.width > 144 / 160) {
+                        maxScreenSize.width = maxScreenSize.height * 160 / 144;
+                    } else {
+                        maxScreenSize.height = maxScreenSize.width * 144 / 160;
+                    }
+                    break;
+                }
+                [[GBAEmulatorCore sharedCore] updateEAGLViewForSize:maxScreenSize screen:[UIScreen mainScreen]];
+            } else {
+                [[GBAEmulatorCore sharedCore] updateEAGLViewForSize:[self screenSizeForContainerSize:self.screenContainerView.bounds.size] screen:[UIScreen mainScreen]];
+            }
+        } else {
             [[GBAEmulatorCore sharedCore] updateEAGLViewForSize:screenRect.size screen:[UIScreen mainScreen]];
         }
-    }
-    else
-    {
+    } else {
         [[GBAEmulatorCore sharedCore] updateEAGLViewForSize:[self screenSizeForContainerSize:self.airplayWindow.bounds.size] screen:self.airplayWindow.screen];
-        
     }
     
     [self.emulatorScreen invalidateIntrinsicContentSize];
     
-    if (self.emulatorScreen.eaglView == nil)
-    {
+    if (self.emulatorScreen.eaglView == nil) {
         self.emulatorScreen.eaglView = [[GBAEmulatorCore sharedCore] eaglView];
     }
 }
@@ -2193,13 +2204,13 @@ static GBAEmulationViewController *_emulationViewController;
     
     [self updateControllerSkinForInterfaceOrientation:self.interfaceOrientation];
     
-    [self.view updateConstraintsIfNeeded];
-    [self.view layoutIfNeeded];
+    [self.containerView updateConstraintsIfNeeded];
+    [self.containerView layoutIfNeeded];
     
     if (self.blurringContents)
     {
         self.blurredContentsImageView.image = [self blurredViewImageForInterfaceOrientation:self.interfaceOrientation drawController:YES];
-        self.blurredContentsImageView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
+        self.blurredContentsImageView.frame = CGRectMake(0, 0, CGRectGetWidth(self.containerView.bounds), CGRectGetHeight(self.containerView.bounds));
     }
     
     if (self.rom != nil)
@@ -2594,14 +2605,14 @@ static GBAEmulationViewController *_emulationViewController;
         imageView.translatesAutoresizingMaskIntoConstraints = YES;
         imageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         [imageView sizeToFit];
-        imageView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
+        imageView.frame = CGRectMake(0, 0, CGRectGetWidth(self.containerView.bounds), CGRectGetHeight(self.containerView.bounds));
         imageView.contentMode = UIViewContentModeBottom;
         imageView.alpha = alpha;
-        [self.view addSubview:imageView];
+        [self.containerView addSubview:imageView];
         imageView;
     });
     
-    [self.view addSubview:self.blurredContentsImageView];
+    [self.containerView addSubview:self.blurredContentsImageView];
     
     self.blurringContents = YES;
 }
@@ -2701,7 +2712,9 @@ static GBAEmulationViewController *_emulationViewController;
         controllerAlpha = [[NSUserDefaults standardUserDefaults] floatForKey:GBASettingsControllerOpacityKey];
     }
     
-    CGSize controllerDisplaySize = [controllerSkin frameForMapping:GBAControllerSkinMappingControllerImage orientation:skinOrientation controllerDisplaySize:viewSize].size;
+    CGSize controllerDisplaySize = [controllerSkin frameForMapping:GBAControllerSkinMappingControllerImage
+                                                       orientation:skinOrientation
+                                             controllerDisplaySize:viewSize].size;
     CGSize screenContainerSize = CGSizeZero;
     CGRect controllerRect = CGRectZero;
     

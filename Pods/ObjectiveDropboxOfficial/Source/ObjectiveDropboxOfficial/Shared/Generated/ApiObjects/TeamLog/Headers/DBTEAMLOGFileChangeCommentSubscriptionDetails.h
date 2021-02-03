@@ -28,9 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Instance fields
 
-/// Target asset position in the Assets list.
-@property (nonatomic, readonly) NSNumber *targetAssetIndex;
-
 /// New file comment subscription.
 @property (nonatomic, readonly) DBTEAMLOGFileCommentNotificationPolicy *dNewValue;
 
@@ -43,28 +40,24 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 /// Full constructor for the struct (exposes all instance variables).
 ///
-/// @param targetAssetIndex Target asset position in the Assets list.
 /// @param dNewValue New file comment subscription.
 /// @param previousValue Previous file comment subscription. Might be missing
 /// due to historical data gap.
 ///
 /// @return An initialized instance.
 ///
-- (instancetype)initWithTargetAssetIndex:(NSNumber *)targetAssetIndex
-                               dNewValue:(DBTEAMLOGFileCommentNotificationPolicy *)dNewValue
-                           previousValue:(nullable DBTEAMLOGFileCommentNotificationPolicy *)previousValue;
+- (instancetype)initWithDNewValue:(DBTEAMLOGFileCommentNotificationPolicy *)dNewValue
+                    previousValue:(nullable DBTEAMLOGFileCommentNotificationPolicy *)previousValue;
 
 ///
 /// Convenience constructor (exposes only non-nullable instance variables with
 /// no default value).
 ///
-/// @param targetAssetIndex Target asset position in the Assets list.
 /// @param dNewValue New file comment subscription.
 ///
 /// @return An initialized instance.
 ///
-- (instancetype)initWithTargetAssetIndex:(NSNumber *)targetAssetIndex
-                               dNewValue:(DBTEAMLOGFileCommentNotificationPolicy *)dNewValue;
+- (instancetype)initWithDNewValue:(DBTEAMLOGFileCommentNotificationPolicy *)dNewValue;
 
 - (instancetype)init NS_UNAVAILABLE;
 
@@ -87,7 +80,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @return A json-compatible dictionary representation of the
 /// `DBTEAMLOGFileChangeCommentSubscriptionDetails` API object.
 ///
-+ (nullable NSDictionary *)serialize:(DBTEAMLOGFileChangeCommentSubscriptionDetails *)instance;
++ (nullable NSDictionary<NSString *, id> *)serialize:(DBTEAMLOGFileChangeCommentSubscriptionDetails *)instance;
 
 ///
 /// Deserializes `DBTEAMLOGFileChangeCommentSubscriptionDetails` instances.
@@ -98,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @return An instantiation of the
 /// `DBTEAMLOGFileChangeCommentSubscriptionDetails` object.
 ///
-+ (DBTEAMLOGFileChangeCommentSubscriptionDetails *)deserialize:(NSDictionary *)dict;
++ (DBTEAMLOGFileChangeCommentSubscriptionDetails *)deserialize:(NSDictionary<NSString *, id> *)dict;
 
 @end
 

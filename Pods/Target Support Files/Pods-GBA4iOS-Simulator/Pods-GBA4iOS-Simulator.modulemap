@@ -1,0 +1,6 @@
+framework module Pods_GBA4iOS_Simulator {
+  umbrella header "Pods-GBA4iOS-Simulator-umbrella.h"
+
+  export *
+  module * { export * }
+}

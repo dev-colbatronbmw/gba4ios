@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E75F2E3FBFC70D056D3E1AB5606C5D9A"
-               BuildableName = "libPSPDFTextView.a"
+               BuildableName = "PSPDFTextView.framework"
                BlueprintName = "PSPDFTextView"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
