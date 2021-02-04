@@ -178,10 +178,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulY-Fy-d4g" userLabel="Container">
-                                <rect key="frame" x="0.0" y="72.666666666666686" width="375" height="666.66666666666652"/>
+                                <rect key="frame" x="0.0" y="34" width="375" height="744"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nSu-0n-xp1" userLabel="Emulator Screen Container View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="426.66666666666669"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="504"/>
                                         <subviews>
                                             <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="220" translatesAutoresizingMaskIntoConstraints="NO" id="KTg-3r-eIu" userLabel="Emulator Screen" customClass="GBAEmulatorScreen">
                                                 <rect key="frame" x="27.666666666666657" y="0.0" width="320" height="220"/>
@@ -195,7 +195,7 @@
                                         </constraints>
                                     </view>
                                     <view multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="240" translatesAutoresizingMaskIntoConstraints="NO" id="3X0-Mp-OVJ" userLabel="Controller View" customClass="GBAControllerView">
-                                        <rect key="frame" x="27.666666666666657" y="426.66666666666663" width="320" height="240"/>
+                                        <rect key="frame" x="27.666666666666657" y="504" width="320" height="240"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
@@ -207,7 +207,6 @@
                                     <constraint firstItem="nSu-0n-xp1" firstAttribute="leading" secondItem="ulY-Fy-d4g" secondAttribute="leading" id="TPP-ve-BG1"/>
                                     <constraint firstItem="nSu-0n-xp1" firstAttribute="top" secondItem="ulY-Fy-d4g" secondAttribute="top" id="bXs-qO-fLD"/>
                                     <constraint firstItem="3X0-Mp-OVJ" firstAttribute="centerX" secondItem="ulY-Fy-d4g" secondAttribute="centerX" id="lzc-kS-ky3"/>
-                                    <constraint firstAttribute="width" secondItem="ulY-Fy-d4g" secondAttribute="height" multiplier="9:16" priority="750" id="sdj-8n-4dU"/>
                                     <constraint firstAttribute="bottom" secondItem="3X0-Mp-OVJ" secondAttribute="bottom" id="xEd-1t-rDN"/>
                                 </constraints>
                             </view>
@@ -217,7 +216,7 @@
                             <constraint firstItem="ulY-Fy-d4g" firstAttribute="centerY" secondItem="Ol9-Hl-eKG" secondAttribute="centerY" id="N1F-i5-jrb"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ulY-Fy-d4g" secondAttribute="bottom" id="Uca-f5-vTX"/>
                             <constraint firstItem="ulY-Fy-d4g" firstAttribute="leading" secondItem="Ol9-Hl-eKG" secondAttribute="leading" id="bzC-xM-WWd"/>
-                            <constraint firstItem="ulY-Fy-d4g" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ol9-Hl-eKG" secondAttribute="top" id="fta-b8-UOr"/>
+                            <constraint firstItem="ulY-Fy-d4g" firstAttribute="top" secondItem="zwA-iH-goq" secondAttribute="bottom" constant="-10" id="d6Q-jh-xzW"/>
                             <constraint firstAttribute="trailing" secondItem="ulY-Fy-d4g" secondAttribute="trailing" id="hpp-L5-QZr"/>
                             <constraint firstItem="ulY-Fy-d4g" firstAttribute="centerX" secondItem="Ol9-Hl-eKG" secondAttribute="centerX" id="m4a-Fj-53Y"/>
                         </constraints>
